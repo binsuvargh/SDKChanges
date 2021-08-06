@@ -11,13 +11,13 @@ namespace bob_container
     {
         static void Main(string[] args)
         {
-             Upload("blobicon.jfif");
+            Upload("blobicon.jfif");
 
-             Copy("blobicon.jfif");
+            Copy("blobicon.jfif");
 
-             Download("Copy-blobicon.jfif");
+            Download("azurepdf.pdf");
 
-             Delete("blobicon.jfif");
+            Delete("blobicon.jfif");
 
             Console.ReadLine();
         }
@@ -97,7 +97,7 @@ namespace bob_container
 
                     // Get a BlobClient representing the destination blob with a unique name.
                     BlobClient destBlob =
-                        AzureSettings.getBlobClient("Copy-" + sourceBlob.Name);
+                        AzureSettings.getBlobClient("New-" + sourceBlob.Name);
 
                     // Start the copy operation.
                      destBlob.StartCopyFromUri(sourceBlob.Uri);

@@ -19,7 +19,6 @@ namespace bob_container
             var storageName = "sa12410e1dv05";
             var contName = "demoblob";
             var credential = new DefaultAzureCredential();
-            var test = credential.GetType();
             var containerClient = new BlobContainerClient(new Uri($"https://{storageName}.blob.core.windows.net/{contName}"), credential);
             return containerClient;
         }
