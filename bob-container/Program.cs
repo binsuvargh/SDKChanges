@@ -11,13 +11,13 @@ namespace bob_container
     {
         static void Main(string[] args)
         {
-            Upload("blobicon.jfif");
+           // Upload("azurepdf.pdf");
 
-            Copy("blobicon.jfif");
+            //Copy("blobicon.jfif");
 
-            Download("azurepdf.pdf");
+            //Download("blobicon.jfif");
 
-            Delete("blobicon.jfif");
+           Delete("blobicon.jfif");
 
             Console.ReadLine();
         }
@@ -27,8 +27,7 @@ namespace bob_container
 
         { 
             Console.WriteLine("Uploading file...");
-            try
-            {
+
                 //testing
                 var downloadPath = Path.Combine("H:\\LocalBlobs", fileName);
                 FileStream file = new FileStream(downloadPath, FileMode.Open, FileAccess.Read);
@@ -48,18 +47,14 @@ namespace bob_container
                     Console.WriteLine(ex.Message);
                 }
                 Console.WriteLine("uploaded");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
         }
        
         static void Download(
            string policyPacketKey)
         {
           
-            Console.WriteLine("\nDownloading blob to stream");
+            Console.WriteLine("\nDownloading blob");
+
             var blobClient = AzureSettings.getBlobClient(policyPacketKey);
 
             var outstream = new MemoryStream();
@@ -85,19 +80,18 @@ namespace bob_container
                 var sourceBlob = AzureSettings.getBlobClient(fileName);
                 if (sourceBlob.Exists())
                 {
-                    // Lease the source blob for the copy operation 
-                    // to prevent another client from modifying it.
+                    // Lease the source blob 
                     BlobLeaseClient lease = sourceBlob.GetBlobLeaseClient();
 
                     // Specifying -1 for the lease interval creates an infinite lease.
                     lease.AcquireAsync(TimeSpan.FromSeconds(-1));
 
-                    // Get the source blob's properties and display the lease state.
+                    // Get the source blob's properties
                     BlobProperties sourceProperties = sourceBlob.GetProperties();
 
-                    // Get a BlobClient representing the destination blob with a unique name.
+                    // Get a destination blob
                     BlobClient destBlob =
-                        AzureSettings.getBlobClient("New-" + sourceBlob.Name);
+                        AzureSettings.getBlobClient($"New-{fileName}");
 
                     // Start the copy operation.
                      destBlob.StartCopyFromUri(sourceBlob.Uri);
